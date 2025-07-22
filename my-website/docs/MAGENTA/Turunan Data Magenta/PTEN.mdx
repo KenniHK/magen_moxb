@@ -1,0 +1,21 @@
+## ERD
+![PTEN](/img/dokumen_magenta/pten.png)
+
+## Table
+|                   Field MAGENMC                   |   Field PTEN  |                                                                Value                                                               |
+|:-------------------------------------------------:|:-------------:|:----------------------------------------------------------------------------------------------------------------------------------:|
+| -                                                 | ID            | Auto Increment                                                                                                                     |
+| -                                                 | NMID          | diisi oleh PTEN                                                                                                                    |
+| OUTLET.QRIS_STATIS_NAME_STICKER                   | NAMA_STICKER  |                                                                                                                                    |
+| OUTLET.NAME                                       | NAMA_MERCHANT |                                                                                                                                    |
+| OUTLET.MPAN                                       | MPAN          |                                                                                                                                    |
+| OUTLET.MID                                        | MID           |                                                                                                                                    |
+| REGENCY.NAME_TAG_QRIS                             | KOTA          |                                                                                                                                    |
+| OUTLET.POSTAL_CODE                                | KODE_POS      |                                                                                                                                    |
+| OUTLET.QRIS_STATIS_MERCHANT_CRITERIA              | KRITERIA      |                                                                                                                                    |
+| MCC.PL                                            | MCC           |                                                                                                                                    |
+| -                                                 | JML_TERMINAL  | 1                                                                                                                                  |
+| PEMILIK.JENISNASABAH                              | TIPE_MERCHANT | "1" --> JENIS NASABAH = I "2" --> JENISNASABAH = O                                                                                 |
+| PEMILIK.NPWP                                      | NPWP          | IF PEMILIK.ISNPWP = 0 MCC.PL = '8661' OR mcc.PL = '8398' OR mcc.PL = '8699'  Maka, akan diisi dengan "NI_ \|\| MERCHANT.NONPROFIT" |
+| PEMILIK.IDENTITY_NO atau PEMILIK.PJB1_IDENTITY_NO | KTP           | Akan mengambil IDENTITY_NO jika JENISNASABAH = I dan sebaliknya jika JENISNASABAH = O                                              |
+| O_FACILITY_FITUR.FACILITY_FITUR_ID                | TIPE_QR       | "D" --> FACILITY_FITUR_ID = 81 "S" --> FACILITY_FITUR_ID = 82                                                                      |

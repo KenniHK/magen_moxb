@@ -1,0 +1,28 @@
+Berikut langkah-langkahnya
+
+## 1. Get token EMS
+
+a. https://sso-apigw-int.intra.bca.co.id/auth/realms/BCA/protocol/openid-connect/token
+
+b.
+```
+[{"key":"client_id","value":"3b93a02d","type":"text","enabled":true},
+{"key":"client_secret","value":"61cd2404a423c6661b80a19765b98445","type":"text","enabled":true},
+{"key":"grant_type","value":"client_credentials","type":"text","enabled":true}]
+```
+
+c. 
+![GET TOKEN](/img/dokumen_magenta/get_token.png)
+
+## 2. Update di table EAIToken di EMS2
+![UPDATE EAITOKEN](/img/dokumen_magenta/update_EAI.png)
+
+## 3. Masuk ke server EMS (10.7.5.76)
+- Cari config dari GenPTDTMSManual di property FDM ID
+ (Path : D:\Source EMS\bca.ems.GenPTDTMSManual)
+
+- Ganti value-nya menjadi FDM ID yangg hendak diproses, jika banyak dipisah koma
+
+
+## 4. Running GenPTDTMSManual menggunakan CMD
+![Running GenPTDTMSManual](/img/dokumen_magenta/update_EAI.png)

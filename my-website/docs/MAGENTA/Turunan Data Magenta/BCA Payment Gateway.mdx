@@ -1,0 +1,100 @@
+---
+id: BCA Payment Gateway
+title: "BCA Payment Gateway"
+sidebar_label: "BCA Payment Gateway"
+---
+
+## **File 1**  
+### **ERD**
+![BCA PG](/img/dokumen_magenta/bcapg.png)
+### **Table**
+|             Field MAGENMC                | Field BCA PG                   | Value                                             |
+|:----------------------------------------:|--------------------------------|---------------------------------------------------|
+|                   -                      | Flag Status                    | A = Add U = Update                                |
+|          ******OUTLET******.MID              | Merchant ID                    |                                                   |
+|              ****OUTLET****.NAME             | Merchant Name                  |                                                   |
+|        ****OUTLET****.NAME_ON_INVOICE        | Merchant Trading Name          |                                                   |
+|            ****OUTLET****.ADDRESS1           | Merchant Address 1             |                                                   |
+|            ****OUTLET****.ADDRESS2           | Merchant Address 2             |                                                   |
+|          ****OUTLET****.REGENCY_NAME         | Merchant City                  |                                                   |
+|         ****OUTLET****.PROVINCE_NAME         | Merchant Province              |                                                   |
+|          ****OUTLET****.POSTAL_CODE          | Merchant Postal Code           |                                                   |
+|             ****OUTLET****.PHONE             | Merchant Phone No              |                                                   |
+|          ****OUTLET****.MOBILEPHONE          | Merchant Mobile No             |                                                   |
+|             ****OUTLET****.EMAIL             | Merchant Email                 |                                                   |
+|     ****OUTLET****.ECOMM_SUPERADMIN_NAME     | Super Admin Name               |                                                   |
+|     ****OUTLET****.ECOMM_SUPERADMIN_PHONE    | Super Admin Mobile No          |                                                   |
+| ****OUTLET****.ECOMM_SUPERADMIN_EMAIL        | Super Admin Email              |                                                   |
+| ****OUTLET****.ECOMM_KEYRECEIVER_NAME        | Secret Key Receiver Name       |                                                   |
+| ****OUTLET****.ECOMM_KEYRECEIVER_PHONE       | Secret Key Receiver Mobile     |                                                   |
+| ****OUTLET****.ECOMM_KEYRECEIVER_EMAIL       | Secret Key Receiver Email      |                                                   |
+| ****OUTLET****.ECOMM_PASSRECEIVER_NAME       | Secret Password Receiver       |                                                   |
+| ****OUTLET****.ECOMM_PASSRECEIVER_PHONE      | Secret Password Receiver No    |                                                   |
+| ****OUTLET****.ECOMM_PASSRECEIVER_EMAIL      | Secret Password Receiver Email |                                                   |
+| ??                                       | Merchant Status                | 2 = Open 8 = Closed                               |
+| **MCC**.PL                               | PLC                            |                                                   |
+| **MCC**.MASTER                           | **MCC**                        |                                                   |
+| **MCC**.VISA                             | VCC                            |                                                   |
+| **MCC**.JCB                              | JCC                            |                                                   |
+| **MCC**.AMEX                             | AXC                            |                                                   |
+| ****OUTLET****.ECOMM_WEB_URL                 | Merchant FrontEnd Resp URL     |                                                   |
+| ****OUTLET****.ECOMM_BACKEND_URL             | Merchant BackEnd Resp URL      |                                                   |
+|                   -                      | TID Primary                    |                                                   |
+|                   -                      | TID Secondary                  |                                                   |
+|                   -                      | TID Rwd Primary                |                                                   |
+|                   -                      | TID Rwd Secondary              |                                                   |
+| ****OUTLET****.ECOMM_KLIKPAY_CODE            | Klikpay Code                   |                                                   |
+|                  ??                      | Merchant Settlement Type       |                                                   |
+|                  ??                      | Force to Settle                |                                                   |
+| ****OUTLET****.ECOMM_3DSECURE                | 3DSecure                       |                                                   |
+| ****OUTLET****.ECOMM_AMOUNT_3DSECURE         | 3DSecure Min Amount            |                                                   |
+|                  ??                      | DCC                            |                                                   |
+| ****OUTLET****.FAX                           | Merchant FAX                   |                                                   |
+|                  ??                      | Payment Link                   | 0 = Disable 1 = Enable                            |
+|                  ??                      | VEDC/MOTO                      | 0 = Disable 1 = Enable                            |
+|                  ??                      | Fare/Non Fare                  | 0 = Disable 1 = Enable                            |
+|                  ??                      | Allow Advance API              | 0 = Disable 1 = Enable                            |
+| ****OUTLET****.ECOMM_INTEGRATION             | Integration                    | 0 = 3 Party 1 = 3 and 2.5 Party 2 = 3 and 2 Party |
+| ****OUTLET****.ECOMM_INTEGRATION_RETURN_URL  | Integration Return URL         |                                                   |
+| ****OUTLET****.ECOMM_INTEGRATION_BACKEND_URL | Integration Backend URL        |                                                   |
+|                   -                      | Tokenization                   |                                                   |
+|                   -                      | Allow ECI Downgrade            | * reserved                                        |
+
+
+## **File 2**  
+### **ERD**
+![BCA PG 2](/img/dokumen_magenta/bcapg2.png)
+### **Table**
+| Field MAGENMC                      | Field BCA PG       | Value                             |                                                                                                        |
+|------------------------------------|--------------------|-----------------------------------|--------------------------------------------------------------------------------------------------------|
+|                -                   | Flag Process       | A/U/D                             | A = Add U = Update D = Delete                                                                          |
+| **OUTLET**.MID                     | Merchant ID        |                                   |                                                                                                        |
+| **OUTLET**.MID                     | Parent Merchant ID |                                   |                                                                                                        |
+|                -                   | TRX_TYPE           |                                   | Isinya Lihat tabel Jenis Trx Type                                                                      |
+| **O_FAC_FITUR_ITEM_LIST**.PLAN     | Plan Code          |                                   |                                                                                                        |
+| **O_FAC_FITUR_ITEM_LIST**.DATEFROM | Start Date         |                                   |                                                                                                        |
+| **O_FAC_FITUR_ITEM_LIST**.DATETO   | End Date           |                                   |                                                                                                        |
+| **O_FAC_FITUR_ITEM_LISTCARD**.NAME | Visa Enable        | Cek apakah name "Visa" exists     | 0 = Disable 1 = Enable                                                                                 |
+| **O_FAC_FITUR_ITEM_LISTCARD**.NAME | MC Enable          | Cek apakah name "Master" exists   |                                                                                                        |
+| **O_FAC_FITUR_ITEM_LISTCARD**.NAME | PL Enable          | Cek apakah name "BCA Card" exists |                                                                                                        |
+| **O_FAC_FITUR_ITEM_LISTCARD**.NAME | JCB Enable         | Cek apakah name "JCB" exists      |                                                                                                        |
+| **O_FAC_FITUR_ITEM_LISTCARD**.NAME | Amex Enable        | Cek apakah name "Amex" exists     |                                                                                                        |
+| **O_FAC_FITUR_ITEM_LISTCARD**.NAME | CUP Enable         | Cek apakah name "CUP" exists      |                                                                                                        |
+| Cek apakah name "CUP" exists       | Tenor              |                                   |                                                                                                        |
+|               ??                   | BIN                |                                   | 6 Digit of BIN-6 Digit of BIN; 6 Digit of BIN-6 Digit of BIN; ........; 6 Digit of BIN-6 Digit of BIN; |
+
+
+### **TRX_TYPE**
+| **Value** | **Jenis Transaksi**         |
+|-----------|-----------------------------|
+|     1     | Full Payment On Us          |
+|     2     | Full Payment Off Us         |
+|     3     | Reward                      |
+|     4     | Regular Installment         |
+|     5     | Non Regular Installment     |
+|     6     | DCC                         |
+|     7     | Void                        |
+|     8     | Refund                      |
+|     9     | Klikpay Debit               |
+|     10    | Klikpay Debit & Kredit      |
+|     11    | Special Regular Installment |

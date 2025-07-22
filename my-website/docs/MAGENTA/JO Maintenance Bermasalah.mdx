@@ -1,0 +1,41 @@
+1. Check status isoutlet dan/atau terminal init exist by tid
+
+```
+    select o.id, o.mid, o.isoutlet, o.createdby, od.terminal_init from outlet o
+    left join outlet_device od on o.id=od.outlet_id
+    where od.terminal_init=?
+```
+<br /><br />
+
+2. Update isoutlet if !=1
+```
+    update outlet set isoutlet=1 where id=?
+```
+
+<br /><br />
+
+3. Check pernah ada history tid tsb atau tdk
+```
+    select id_outlet_device from outlet_device_audittrail where field='TERMINAL_INIT' and newvalue=?
+```
+
+<br /><br />
+
+4. Check whole history dr id outlet device tsb (misal di step 1 ga muncul bisa ketauan status terakhirnya apa)
+
+- Kemungkinan 1: od terhapus --> hrsnya udh tercover di perbaikan kemarin (jd hrsnya gabakal ada lg)
+- Kemungkinan 2: tid di magenta != tid di elastics --> bisa ditrack lewat query ini, tid di magenta-nya apa select * from outlet_device_audittrail where id_outlet_device=?
+
+<br /><br />
+
+5. Check status isoutlet dan/atau terminal init exist by mid (dipakai kalo step 1-4 ga muncul apa2)
+
+> Kemungkinan bisa aja tid yg diinfo di grup tdk sesuai sm yg ada di magenta
+
+```
+    select o.id, o.mid, o.isoutlet, o.createdby, od.terminal_init from outlet o
+    left join outlet_device od on o.id=od.outlet_id
+    where o.mid=?
+```
+
+<br /><br />

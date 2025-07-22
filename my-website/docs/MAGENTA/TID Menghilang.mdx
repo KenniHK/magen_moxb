@@ -1,0 +1,9 @@
+1. Cek data od di magenmc
+<br />
+2. Jika benar **od = null** --> check createdby pada outletnya = 'EMS_CONVERSION_EDC' (mid migrasi) bukan?
+Jika **mid migrasi** --> cek ada fdm atau tidak menggunakan query: **get latest id fdm outlet**
+Jika **mid migrasi tetapi tidak ada fdm** --> balikan mid ke EMS
+Jika **bukan mid migrasi/mid migrasi tetapi sudah ada fdm** --> check data od by id fdm outlet di magenms (guide insert data od ada di magenmc)
+<br />
+3. Insert data od & turunannya di **magenmc (outlet_id di table outlet_device get from step 1)**
+Query: [Query Insert OD](https://bcaoffice365.sharepoint.com/:u:/r/sites/ITX-AMerchanteCommerce/Shared%20Documents/OneNote+Uploads/Query+Insert+OD%204.zip?csf=1&web=1&e=QZbe6m)

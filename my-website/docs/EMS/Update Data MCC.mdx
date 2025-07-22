@@ -1,0 +1,28 @@
+1. **Cleaning Tempory**
+
+```
+delete from TEMP_MID_MCC
+```
+
+2. **INSERT DATA MID dan MCC yang akan di update, sample MCC PL**
+
+```
+insert into TEMP_MID_MCC values('XXXXXXXXX',,1234,,,)
+```
+
+3. **Cek Data Before**
+```
+select ml.mid,ml.VCCCode,ml.PLCCode,ml.JCCCode,ml.MCCCode from MerchantCardlink ml inner join TEMP_MID_MCC t on ml.mid=t.mid
+```
+
+4. **Running SP**
+```
+DECLARE @return_value int
+EXECUTE @return_value=[dbo].[SP_TEMP_MID_MCC_TO_MerchantCardlink]
+SELECT 'Return Value'=@return_value
+```
+
+5. **Cek Data After**
+```
+select ml.mid,ml.VCCCode,ml.PLCCode,ml.JCCCode,ml.MCCCode from MerchantCardlink ml inner join TEMP_MID_MCC t on ml.mid=t.mid
+```

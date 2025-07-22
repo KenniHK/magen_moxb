@@ -1,0 +1,57 @@
+**1. Cleaning Temporary**
+```
+delete from MAGENMC.O_TEMP_OMSET
+```
+<br />
+
+**2. Masukkan data ke table temporary MAGENMC.O_TEMP_OMSET**
+```
+insert into O_TEMP_OMSET values(xxxx)
+```
+
+> atau bisa memakai fitur import dari Database.NET
+<br />
+
+**3. Cek Data Before**
+```
+select o.MID
+    ,o.NAME
+    ,o.QRIS_STATIS_MERCHANT_CRITERIA
+    ,o.OMSETPERBULAN
+from OUTLET O
+inner join O_TEMP_OMSET t on o.mid=t.mid
+```
+<br />
+
+**4. Running SP**
+```
+DECLARE
+    I_UPDATEDBY NVARCHAR2(200);
+    I_UPDATEDBYNAME VARCHAR2(200);
+    I_UPDATEDTERMINAL NVARCHAR2(200);
+    O_STATUS_MSG VARCHAR2(200);
+BEGIN
+I_UPDATEDBY:=NULL;
+I_UPDATEDBYNAME:=NULL;
+I_UPDATEDTERMINAL:=NULL;
+"MAGENMC"."SP_O_QS_MERCCRITERIA_UPD"(
+     I_UPDATEDBY
+    ,I_UPDATEDBYNAME
+    ,I_UPDATEDTERMINAL
+    ,O_STATUS_MSG
+);
+DBMS_OUTPUT.PUT_LINE('O_STATUS_MSG='||O_STATUS_MSG);
+END;
+```
+<br />
+
+
+**5. Cek Data After**
+```
+select o.MID
+    ,o.NAME
+    ,o.QRIS_STATIS_MERCHANT_CRITERIA
+    ,o.OMSETPERBULAN
+from OUTLET O
+inner join O_TEMP_OMSET t on o.mid=t.mid
+```

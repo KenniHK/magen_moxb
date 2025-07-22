@@ -1,0 +1,84 @@
+UPDATE MDR based on CL
+
+1. **Running batch compare**
+
+    > edit SP compare di EMS
+    > SP_COMPARE_MIGRATION_GET
+    > running batch compare
+
+    path : **/bcamagen/app/batch/magenta.migration.data.compare**
+
+    ```
+    source: http://bcagitlab/gsit_cardopensystem/Magenta/magenta.migration.data.compare 
+    ```
+<br />
+
+2. **Ambil excel di output**
+
+    - filter kolom CARD STATUS CARDLINK
+
+        -> uncheck false
+
+    - filter kolom ISMATCH CARDLINK vs MAGENTA
+
+        -> uncheck true
+
+    - filter kolom CARDLINK VALUE
+
+        -> uncheck value 00000 kalau ada
+
+<br />
+
+3. **Isi template**
+
+    **Filter kolom item MDR MAESTRO**
+    > check MDR MAESTRO, sisanya uncheck
+    > copy MID, paste ke TEMPLATE kolom MID
+    > copy O_FACILITYCARD_ID paste ke TEMPLATE kolom O_FACILITYCARD_ID
+    > copy CARDLINK VALUE ke MDROFFUS -> kalikan dengan 0.001
+
+    **Filter kolom item MDR ON US DEBIT CARD**
+    > check MDR ON US DEBIT CARD, sisanya uncheck
+    > copy MID, paste ke TEMPLATE kolom MID
+    > copy O_FACILITYCARD_ID paste ke TEMPLATE kolom O_FACILITYCARD_ID
+    > copy CARDLINK VALUE ke MDRONUS -> kalikan dengan 0.01
+
+    **Filter kolom item MDR OFF US JCB CARD,MDR OFF US VISA CARD,MDR OFF US MASTER CARD,MDR OFF US UNION PAY,MDR OFF US AMERICAN EXPRESS**
+    > check list OFF US tsb, sisanya uncheck
+    > copy MID, paste ke TEMPLATE kolom MID
+    > copy O_FACILITYCARD_ID paste ke TEMPLATE kolom O_FACILITYCARD_ID
+    > copy CARDLINK VALUE ke MDROFFUS -> kalikan dengan 0.001
+    > set ISACTIVEOFFUS = 1 untuk all OFF US CREDIT
+<br />
+
+4. **Save as CSV**
+<br />
+
+5. **DELETE MAGENMC.TEMP_OUTLET_MDR**
+
+    **Check isi data**
+    SELECT * FROM TEMP_OUTLET_MDR
+
+    **Delete data**
+    DELETE FROM TEMP_OUTLET_MDR
+
+<br />
+
+6. **IMPORT DATA ke MAGENMC.TEMP_OUTLET_MDR**
+
+<br />
+
+7. **Run SP**
+    ```jsx title="Sample : EXEC UPDATE"
+    DECLARE 
+        O_STATUS_MSG VARCHAR2(200); 
+
+    BEGIN 
+        "MAGENMC"."SP_TEMP_OUTLET_MDR_UPD"( 
+            O_STATUS_MSG 
+        ); 
+
+    DBMS_OUTPUT.PUT_LINE('O_STATUS_MSG='||O_STATUS_MSG); 
+
+    END; 
+    ```

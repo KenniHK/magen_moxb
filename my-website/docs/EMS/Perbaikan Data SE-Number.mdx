@@ -1,0 +1,28 @@
+*Step perbaikan untuk case tersebut, jika ada case serupa :*
+Terkait case tersebut dari tim GSIT dan user EMS/Magenta menggunakan cara sebagai berikut
+
+1. Mengkondisikan value AMEX SE NUMBER yang sudah tergenerate dikosongkan dari table mirror cardlink di EMS/MAGENTA
+2. Tim PAM akan membuat FDM Ubah Data untuk trigger perubahan cardlink
+
+:::note
+
+Cukup di poin 1 saja update di db EMS
+
+:::
+
+```jsx title="Sample : Handle Amex SE-Number"
+--DB EMS2
+--1. SELECT data untuk memastikan
+select mid
+    ,namausaha
+    ,ax_se_nmbr
+from merchantcardlink
+where mid = 001757655
+    and ax_se_nmbr = '8467514790'
+
+--2. UPDATE menjadi kosong
+--update merchantcardlink set ax_se_nmbr = '' where mid = 001757655
+--  and ax_se_nmbr = '8467514790'
+```
+
+Setelah itu informasikan ke tim PAM untuk lakukan ubah data trigger perubahan

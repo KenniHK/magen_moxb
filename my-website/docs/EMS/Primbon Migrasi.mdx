@@ -1,0 +1,56 @@
+Link file SQL : [PRIMBON MIGRASI.zip](https://bcaoffice365-my.sharepoint.com/:u:/g/personal/u550699_bca_co_id/EYOSvSrO9dtKsufDAaXiLywBq1TKKJ05ParoBIwpVU3Ucw?e=VYbwJM)
+
+1. Lihat **data** yang diberikan oleh **CPS**
+![DATA CPS](/img/dokumen_magenta/fileCPS.png)
+
+2. **Copy** seluruh **MID** dari file excel yang diberikan dan **paste** ke dalam file **excel baru**.
+
+3. Pada **kolom sebelah MID**, berikan **FLAG_DAY (TANPA HEADER)** dengan format: **YYYYMMDD_DAY_MALAM/SUBUH** --> ex: **20230725_SELASA_MALAM**
+![Import File](/img/dokumen_magenta/2ImportFile.png)
+
+4. Simpan file dalam format **.csv**
+
+5. Buka database **PROD EMS2**
+
+6. **Import** file csv ke Table **temp_mid_to_migrate** dengan cara **klik kanan** pada table dan pilih **import** lalu cari file yang diinginkan, pastikan jika sudah terimport: bisa menggunakan **query** ini "select * from temp_mid_to_migrate where flag_day='YYYYMMDD_HARI_MALAM/SUBUH';"
+![Import to DB](/img/dokumen_magenta/3Import_to_db.png)
+![Import to DB 2](/img/dokumen_magenta/importDB2.png)
+![Check Imported data](/img/dokumen_magenta/Check_imported_data.png)
+
+7. Lakukan **penyisiran** berdasarkan mid yang telah di input. Apa saja yang perlu dilakukan dapat dilihat dibawah ini:
+```
+19|Flazz Perdana --> kalo ga punya item "Harga Perdana", ditambahin di table MerchantProductItem item "Harga Perdana" dengan value "NONCABANG" (tanpa doublequotes)
+22|Flazz Topup Tunai --> 
+- kalo ga punya item "Minimal TopUp", ditambahin di table MerchantProductItem  item  "Minimal TopUp" dengan value "00020000" (tanpa doublequotes)
+- kalau punya item "Minimal TopUp" tetapi valuenya NULL atau '', diupdate valuenya di table MerchantProductItem jadi "00020000" (tanpa doublequotes)
+22|Flazz Topup Tunai -->
+- kalo ga punya item "Minimal TopUp", ditambahin di table MerchantProductItem  item  "Minimal TopUp" dengan value "00020000" (tanpa doublequotes)
+- kalau punya item "Minimal TopUp" tetapi valuenya NULL atau '', diupdate valuenya di table MerchantProductItem jadi "00020000" (tanpa doublequotes) 
+23|Flazz Topup Kartu -->
+- kalo ga punya item "Minimum TopUP", ditambahin di table MerchantProductItem  item "Minimum Top UP" dengan value "20000" (tanpa doublequotes)
+- kalau punya item "Minimum Top UP" tetapi valuenya NULL atau '', diupdate valuenya jadi "20000" (tanpa doublequotes)
+55|PL5 --> dihapus Product 55|PL5nya di table MerchantProduct kalau MIDnya tidak ada di table temp_mid_compli
+39|Custom Masking --> dihapus 39|Custom Masking dari table MerchantProductkalo tidak punya Item
+10|ECR --> delete product 10|ECR dari table MerchantProduct, jika tidak punya product item "ECR Type"
+
+```
+
+8. Cara melakukan penyisiran dapat dilihat pada file query yang telah di sediakan pada PRIMBON MIGRASI, contoh nya dapat dilihat dibawah ini :
+```
+   Kasus 19|Flazz Perdana:
+   
+   1. Buka file 10 Flazz Perdana.sql
+   2. Ganti flag_day sesuai yang di inginkan --> Block flag_day sekarang, ctrl+f, isi replace nya, dan klik replace all.
+   3. Cek apakah ada data yang harus di input atau update, caranya dengan block kode lalu tekan execute/ctrl+enter
+   4. Jika ada lakukan input atau update dengan menjalankan kode pada file, jika ragu block code dari begin tran sampai sebelum rollback. 
+    - Jika terjadi kesalahan block rollback dan jalankan. 
+    - Jika sudah yakin benar dan jumlah data yang diubah benar, block commit dan jalankan.
+   5. Lanjut ke kasus selanjutnya
+   6. Jika semua kasus sudah selesai, jalankan truncate table EDC_TEMP
+
+```
+
+![Change Flag Day Query](/img/dokumen_magenta/Change_flag_day_query.png)
+![Checkdata and insert](/img/dokumen_magenta/Checkdata_and_insert.png)
+
+9. Jika sudah dilakukan semua, maka persiapan migrasi done. Good Job Gaes 😄, proud of you 👍. Dah bisa tidur dengan tenang😴.

@@ -1,0 +1,123 @@
+## **Case 1 | Pemilik CIS Asli Ada**
+
+- **Step 1**  
+    Cek MID-nya memakai service: http://magenta-api.intra.bca.co.id:55205/api.merchant_v2.0.0/v1.0.0/Outlet/IndukCicilan/{mid}.  
+    **Contoh: MID → 001524590**  
+    ![CEK MID BY SERVICE](/img/dokumen_magenta/Cek-MID-by-service.png)
+    <br />
+
+- **Step 2**
+Buka PROD MAGENMC
+ <br />
+
+- **Step 3**  
+**Update** semua **pemilik_id** dari CIS Induk ke semua **CIS bermasalah**:
+![CIS DUMMY](/img/dokumen_magenta/Cis-Dummy.png)
+
+    ```jsx title="Code"
+        update merchant set pemilik_id = (select id from pemilik where cis = {CIS Benar}) where pemilik_id =  (select id from pemilik where cis = {CIS Salah});
+    ```
+
+    ```jsx title="Example"
+    update merchant set pemilik_id = (select id from pemilik where cis = '00035378942') where pemilik_id =  (select id from pemilik where cis = '000885000410536');
+    update merchant set pemilik_id = (select id from pemilik where cis = '00035378942') where pemilik_id =  (select id from pemilik where cis = '000885000410534');
+    update merchant set pemilik_id = (select id from pemilik where cis = '00035378942') where pemilik_id =  (select id from pemilik where cis = '000885000410535');
+    ```
+     <br />
+
+- **Step 4**  
+Cek lagi memakai service nomor 1, apakah sudah berada dalam 1 CIS.
+![CIS MID Perbaikan](/img/dokumen_magenta/Cek-MID-After-Perbaikan.png)
+ <br />
+
+- **Step 5**  
+Cek jenis outlet dari MID nya, jika QRIS statis cek ke https://ebanksvc.bca.co.id/mcb-resource/v1.0.0/qr/show/{mid}, untuk mengecek sudah memiliki sticker atau tidak. Bisa lihat juga di database MAGENMC apakah email dari pemilik nya apakah sudah ada atau NULL. Kalau NULL bisa di update menjadi email yang benar.
+![Cek Stiker](/img/dokumen_magenta/Cek-Sticker.png)
+ <br />
+
+- **Step 6**  
+    Cek ke Messi untuk melihat apakah CIN/CIS dari pemiliknya sudah yang benar atau masih yang dummy. Cek melalui [Messi](https://messikc.intra.bca.co.id:55328/auth/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Fmessikc.intra.bca.co.id%3A55328%2Fauth%2Fadmin%2Fmaster%2Fconsole%2F%23%2Frealms%2Fbca%2Fusers%2Fce955810-2d66-4a1b-996e-38627566c8c9%2Fuser-attributes&state=bdf54053-2aed-4603-88ea-fd0fdc2d1260&response_mode=fragment&response_type=code&scope=openid&nonce=bbf55680-176c-4952-85bf-77778417bb2d&code_challenge=4pSbYWHR85mkGcl4ASZ-r9A4SQxdSdmP_P9O-5NtCwA&code_challenge_method=S256).
+    ```jsx title="Username dan Password"
+    username: admin_bca
+    password: bcabca
+    ``` 
+<br />
+
+- **Step 7**
+Setelah masuk search berdasarkan email dari si pemilik, lalu tekan ID-nya untuk melihat lebih detail lagi.
+![FIND EMAIL MESSI](/img/dokumen_magenta/Find-Email-Messi.png)
+ <br />
+
+- **Step 8**
+Pindah ke tab attribute dan ubah CIN-nya dengan CIN yang benar, lalu tekan save.
+![CIN sesuai Messi](/img/dokumen_magenta/Ubah-CIN-Sesuai-Messi.png)
+ <br />
+
+- **Step 9**
+Done bisa balas email
+<br />
+
+## **Case 2 | Pemilik CIS Asli Tidak Ada**
+
+- **Step 1**  
+Cek MID-nya memakai service: http://magenta-api.intra.bca.co.id:55205/api.merchant_v2.0.0/v1.0.0/Outlet/IndukCicilan/{mid}.  
+**Contoh: MID → 001524590**  
+![MID by SERVICE](/img/dokumen_magenta/MID-by-Service.png)
+ <br />
+
+- **Step 2**
+Buka PROD MAGENMC.
+ <br />
+
+- **Step 3**  
+    **Update** semua **CIS DUMMY / CIS Lama*** di Pemilik dengan **CIS Baru**
+    Ada dua kasus: CIS dummy → CIS baru dan CIS lama → CIS baru
+
+    :::note
+
+    Ubah juga yang lainnya sesuai dengan yang di email, tapi ada rule nya tidak semuanya boleh langsung diubah → Rules nya menyusul, Ex: CIS Dummy ke CIS Asli boleh, tapi CIS asli ke CIS asli tidak boleh.
+
+    :::
+
+    ![CIS DUMMY BENAR](/img/dokumen_magenta/Cis-Benar-Cis-Dummy.png)
+
+    ```jsx title="Code Cek Pemilik"
+    select * from pemilik where cis={CIS LAMA};
+    ```
+
+    ```jsx title="Code Update"
+    update pemilik set cis={CIS Baru} where cis={CIS DUMMY/CIS LAMA} and id={pemilik_id};
+    ```
+
+    ```jsx title="Code Update (MID awal dan akhir berbeda)"
+    update merchant set pemilik_id = (select id from pemilik where cis = {cis baru}) where id=(select m.id from merchant m
+    inner join outlet o on m.id=o.merchant_id and m.pemilik_id=(select id from pemilik where cis = {cis lama}) and o.mid={mid yang mau diubah}); 
+    ↳ Note: Better pakai ini aja juga untuk semua untuk kebaikan bersama wkkwwkkw!
+    ```
+     <br />
+
+- **Step 4**  
+    Cek lagi memakai service nomor 1, apakah sudah berada dalam 1 CIS.
+    ![CEK MID AFTER PERBAIKAN](/img/dokumen_magenta/Cek-MID-after.png)
+     <br />
+
+- **Step 5**  
+Cek jenis outlet dari MID nya, jika QRIS statis cek ke https://ebanksvc.bca.co.id/mcb-resource/v1.0.0/qr/show/{mid}, untuk mengecek sudah memiliki sticker atau tidak. Bisa lihat juga di database MAGENMC apakah email dari pemilik nya apakah sudah ada atau NULL. Kalau NULL bisa di update menjadi email yang benar.
+![CIS STICKER QRIS](/img/dokumen_magenta/Cek-Sticker-2.png)
+ <br />
+
+- **Step 6**  
+    Cek ke Messi untuk melihat apakah CIN/CIS dari pemiliknya sudah yang benar atau masih yang dummy. Cek melalui [Messi](https://messikc.intra.bca.co.id:55328/auth/realms/master/protocol/openid-connect/auth?client_id=security-admin-console&redirect_uri=https%3A%2F%2Fmessikc.intra.bca.co.id%3A55328%2Fauth%2Fadmin%2Fmaster%2Fconsole%2F%23%2Frealms%2Fbca%2Fusers%2Fce955810-2d66-4a1b-996e-38627566c8c9%2Fuser-attributes&state=bdf54053-2aed-4603-88ea-fd0fdc2d1260&response_mode=fragment&response_type=code&scope=openid&nonce=bbf55680-176c-4952-85bf-77778417bb2d&code_challenge=4pSbYWHR85mkGcl4ASZ-r9A4SQxdSdmP_P9O-5NtCwA&code_challenge_method=S256).
+    ```jsx title="Username dan Password"
+    username: admin_bca 
+    password: bcabca
+    ```
+     <br />
+
+- **Step 7**  
+    Setelah masuk search berdasarkan email dari si pemilik, lalu tekan id nya untuk melihat lebih detail lagi.
+    ![FIND EMAIL MESSI](/img/dokumen_magenta/FindEmailMessi.png)
+
+- **Step 8**  
+    Pindah ke tab attribute dan ubah CIN-nya dengan CIN yang benar dan add MID kalau belum ada (pakai ## ex:123456##789123), lalu tekan save.
+    ![Ubah CIN MESSI](/img/dokumen_magenta/UbahCINMessi.png)

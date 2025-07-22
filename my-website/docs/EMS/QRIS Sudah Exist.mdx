@@ -1,0 +1,23 @@
+Karena QRIS sudah exist di INSYS, muncul anggapan bahwa :
+
+- Sudah aktif di EMS
+- Tidak perlu init
+
+## Kronologi
+
+**Sample case :**
+
+Dulu QRIS hanya bisa avocado tetapi dari ems menurunkan juga untuk move. Alhasil, QRISnya ada tetapi tidak bisa dipakai di move. Karena sekarang move sudah bisa QRIS jadi perlu di-hit lagi untuk mengaktifkannya.
+![Checkdata and insert](/img/dokumen_magenta/QRIS_exist.png)
+
+## Handle
+1. Set is init ulang di fdm.isinitulang = 1
+2. Mundurin ke rfa
+3. Run batch manual di server batch (10.7.5.76)
+
+> **Directory** : D
+>
+> **Folder** : sourceems/bca.ems.genptdtmsmanual
+
+- Pada config ganti fdm id dengan fdm yg mau di run
+- Exec batchnya

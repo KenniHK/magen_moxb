@@ -1,0 +1,86 @@
+Cara solve case di bawah, db EMS2 PRODUCTION :
+
+- Update / Delete di FDM Product
+
+```jsx title="FDM Product"
+select f.id fdm_id
+       ,fp.*
+from fdm f
+INNER JOIN fdmproduct fp on f.id = fp.fdm_id
+where f.id = 2208010083
+       and fp.productid = 70
+GO
+
+select *
+from fdmproduct
+where id = 2190919681
+       and fdm_id = 2208010083
+       and productid = 70
+```
+
+:::note
+
+UPDATE menjadi DELETE jika statusproductonfdm = 'EXIST'
+DELETE row jika statusproductonfdm = 'ADD'
+
+:::
+
+
+```jsx title="Sample"
+--update fdmproduct set statusproductonfdm = 'DELETE' where id = 2190919681
+--   and fdm_id = 2208010083
+--   and productid = 70
+```
+
+- Update / Delete di FDM TERMINAL PRODUCT
+
+
+```jsx title="FDM Terminal Product"
+select f.id fdm_id
+    ,ftp.*
+from fdm f
+INNER JOIN fdmterminal ft on f.id = ft.fdm_id
+INNER JOIN fdmterminalproduct ftp on ft.id = ftp.fdmterminal_id
+where f.id = 2208010083
+    and ftp.productid = 70
+
+select *
+from fdmterminalproduct
+where fdmterminal_id in (
+            2174099950
+            ,2174099949
+            )
+    and productid = 70
+    and statusproductonfdm = 'EXIST'
+
+select *
+from fdmterminalproduct
+where fdmterminal_id in (2174103290)
+    and productid = 70
+    and statusproductonfdm = 'ADD'
+```
+
+:::note
+
+UPDATE menjadi DELETE jika statusproductonfdm = 'EXIST'
+DELETE row jika statusproductonfdm = 'ADD'
+
+:::
+
+
+```jsx title="Sample"
+    --**sample UPDATE fdmterminalproduct:**
+    --update fdmterminalproduct set statusproductonfdm = 'DELETE'
+    --where fdmterminal_id in (
+    --            2174099950
+    --            ,2174099949
+    --            )
+    --    and productid = 70
+    --    and statusproductonfdm = 'EXIST'
+        
+    --**sample DELETE fdmterminalproduct: **
+    --delete from fdmterminalproduct where fdmterminal_id in (2174103290)
+    --    and productid = 70
+    --    and statusproductonfdm = 'ADD'
+    --    ```
+```

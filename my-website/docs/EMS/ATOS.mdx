@@ -1,0 +1,48 @@
+---
+id: ATOS Reapprove to RFA
+title: "(ATOS) Reapprove to RFA"
+sidebar_label: "(ATOS) Reapprove to RFA"
+---
+
+- karena impact update Cardlink ATOS
+- need reapprove EMS ke RFA
+
+Untuk handle case ini karena cardlink yang bermasalah, sehingga inputan FDM di EMS menjadi stack
+![Reapprove EMS](/img/dokumen_magenta/reapproveEMS1.png)
+
+Solusinya :
+
+1. Set status dimundurkan ke RFA
+2. Minta tim approvenya untuk approve ulang
+
+## Poin 1 bisa memakai cara berikut :
+
+**Sample - REAPPROVE EMS**
+```jsx title="cek data"
+>select id,status from fdm where id=2210170001   
+>select * from fdmlog where fdm_id=2210170001
+```
+![Reapprove EMS2](/img/dokumen_magenta/reapproveEMS2.png)
+
+```jsx title="execute set backward status -> RFA"
+DECLARE @return_value int 
+EXECUTE @return_value=[dbo].[BackWardStepAfterCardlink] 
+     @fdmid=2210170001 
+    ,@status='RFA' 
+SELECT 'Return Value'=@return_value 
+```
+
+```jsx title="cek data after"
+select id,status from fdm where id=2210170001 
+select * from fdmlog where fdm_id=2210170001
+```
+![Reapprove EMS3](/img/dokumen_magenta/reapproveEMS3.png)
+
+
+```jsx title="sql"
+select e.* from merchant m
+inner join merchantEDC me on m.id=merchant_id and m.mid=000679683
+inner join EDC e on me.EDC_id=e.id;
+```
+
+select * from outlet o inner join outlet_device od on o.id=od.outlet_id and o.mid='000679683';

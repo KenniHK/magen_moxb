@@ -1,0 +1,30 @@
+## Check Hogging & Stuck
+Cek sesuai site dan instance yang alert :
+
+![Alert](/img/dokumen_magenta/alert_1.png)
+![Alert2](/img/dokumen_magenta/alert_2.png)
+
+1. Servers
+2. magenta_app_01 & magenta_app_02
+3. Monitoring -> Threads
+
+## Job Restart
+- Minta inc alert ke syso
+- Request PAIMON ke tim network terkait inc
+- Suspend site yang mau di restart
+- Restart server yang hogging/stuck-nya tinggi
+
+| SITE | INSTANCE       | JOB NAME     |
+|------|----------------|--------------|
+| WSA  | Magenta_app_01 | OLN2MGN01RST |
+|      | Magenta_app_02 | OLN2MGN02RST |
+|      | Magenta_app_03 | OLN2MGN03RST |
+|      | Magenta_app_04 | OLN2MGN04RST |
+| MBCA | Magenta_app_01 | OLN1MGN01RST |
+|      | Magenta_app_02 | OLN1MGN02RST |
+|      | Magenta_app_03 | OLN1MGN03RST |
+|      | Magenta_app_04 | OLN1MGN04RST |
+| GRHA | Magenta_app_01 | OLN3MGN01RST |
+|      | Magenta_app_02 | OLN3MGN02RST |
+|      | Magenta_app_03 | OLN3MGN03RST |
+|      | Magenta_app_04 | OLN3MGN04RST |

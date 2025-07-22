@@ -1,0 +1,29 @@
+Query link: [Query Check Case MID Bermasalah](https://bcaoffice365.sharepoint.com/:u:/r/sites/ITX-AMerchanteCommerce/Shared%20Documents/OneNote+Uploads/Query+Check+Case+MID+Bermasalah.zip?csf=1&web=1&e=Jgt3NH)
+
+1. **Pastikan mid tidak ada di magenta dan EMS**  
+    > Pastikan bahwa:
+    > migrate_flag = 3
+    > ismerchantems = 0
+    > createdby = 'EMS_CONVERSION_EDC'
+
+2. Cek apakah status migrasi di ems berhasil atau gagal (**isSuccessMigrate = 1** atau **pernah 1**) di **table MID_MIGRATE_TO_MAGENTA**
+
+> Cara cek jika pernah 1: readymigrate_note contains "already processed"
+> Cara cek jika gagal: lihat audittrail migrasi
+
+3.  Jika **gagal** --> update status mid di ems  
+    Jika **berhasil** --> cek keberadaan tid-nya di ems & magenta. Lihat jumlah tid-nya sama atau tidak
+
+
+4. Jika **berbeda** --> cek apakah ada fdm di magenta?
+
+    ```
+    - Ada --> update status mid di magenta (insert data tid. Guide: TID menghilang)     
+    - Tidak ada --> update status mid di ems    
+    ```
+
+    Jika **sama** --> cek mdr dengan batch compare mdr: [comparison.zip](https://bcaoffice365-my.sharepoint.com/:u:/r/personal/u060258_bca_co_id/Documents/Microsoft%20Teams%20Chat%20Files/COMPARISON.zip?csf=1&web=1&e=sT1XqZ)
+
+
+5.  Jika mdr **sesuai** --> update status mid di magenta  
+    Jika mdr **tidak sesuai** --> update mdr di magenta

@@ -1,0 +1,22 @@
+## **ERD**
+![MESSI](/img/dokumen_magenta/messi.png)
+
+## **USER_ENTITY Tabble**
+| Field MAGENMS        | Field MESSI | Value               |
+|----------------------|-------------|---------------------|
+|         -            | ID          | auto generated uuid |
+| **FDM_OUTLET**.EMAIL | EMAIL       |                     |
+| **FDM_PEMILIK**.NAME | FIRST_NAME  |                     |
+| **FDM_OUTLET**.EMAIL | USERNAME    |                     |
+
+## **USER_ATTRIBUTE Table**
+| Field MAGENMS                                                                        | Field MESSI | Value                                                                   |
+|--------------------------------------------------------------------------------------|-------------|-------------------------------------------------------------------------|
+|                            -                                                         | ID          | auto generated uuid                                                     |
+|                            -                                                         | USER_ID     | Refrensi ke USER_ENTITY                                                 |
+|                            -                                                         | NAME        | Diisi dengan KEY pada Tab Attributes di web app MESSI (cin, no_hp, mid) |
+| **FDM_OUTLET**.MID<br /> **FDM_PEMILIK**.CIS<br /> **FDM_PEMILIK**.MOBILEPHONE<br /> | VALUE       |                                                                         |
+
+<br />
+Contoh Field **USER_ATTRIBUTE**
+![MESSI 2](/img/dokumen_magenta/messi2.png)

@@ -1,0 +1,85 @@
+1. User akan mengirim file excel template terminate pten.
+    Copy isi file dari merchant ke template berikut.
+    Format template baru: `insert file DELETE_QRIS_NMR_93600014_{{YYMMDD}}.xlsx`
+
+    Cek data dari user, sesuaikan beberapa field berikut.
+
+    | **Field**         | **Keterangan**                                       |
+    |-------------------|------------------------------------------------------|
+    | MID               | Pastikan depannya terisi dengan 0085 + mid           |
+    | Jml Terminal      | Kalau qris statis isi 1                              |
+    | Tipe Merchant     | 1 = Individu 0 = Organisasi                          |
+    | NPWP              | Kalau tidak ada --> kosongin aja, jangan diisi strip |
+    | Tipe QR           | QRIS statis --> S qris statis --> D                  |
+    | Keterangan DELETE | Max length 50                                        |
+
+    Jika ada perubahan, janlup di save as dan rename filenya dengan format:
+    `DELETE\_QRIS\_NMR\_93600014_{{YYMMDD}}_BCAbatch{{NoBatch}}`
+
+    Contoh:  
+    DELETE_QRIS_NMR_93600014_231027_BCAbatch01
+    DELETE_QRIS_NMR_93600014_231027_BCAbatch02
+
+    :::info
+
+    - NoBatch: increment dari 01
+    - Pastikan ada end di pojok kiri bawah
+    - Pastikan file tidak terpassword
+
+    :::
+
+    ![REQ PENUTUPAN PTEN](/img/dokumen_magenta/req-penutupan-pten.png)
+
+    <br />
+
+2. Upload File via SSH ke sini via remote.intra.bca.co.id/vpn/index.html  
+   > IP: 10.0.50.82  
+   > port: 22  
+   > user: monqrms  
+   > pass: BcaBca123Psswd!  
+   > path: /cd/QR/output  
+
+    ![REQ PENUTUPAN PTEN 2](/img/dokumen_magenta/req-penutupan-pten-2.png)
+
+    <br />
+
+3. Masuk ke server pten untuk update dan jalankan batch
+   > IP: 10.0.50.82  
+   > port: 22  
+   > user: pten  
+   > pass: Pt3nP@ssw0rd123  
+   > path: /batch/qrms  
+
+    ![REQ PENUTUPAN PTEN 3](/img/dokumen_magenta/req-penutupan-pten-3.png)  
+    <br />
+    Update file qrpten_delete.sh sesuaikan nama file dengan NoBatch nya  
+    ![REQ PENUTUPAN PTEN 4](/img/dokumen_magenta/req-penutupan-pten-4.png)  
+    <br />
+
+    Jalankan batch ./qrpten_delete.sh
+    ![REQ PENUTUPAN PTEN 5](/img/dokumen_magenta/req-penutupan-pten-5.png)  
+
+    <br />
+
+4.  Untuk memastikan file sudah masuk ke PTEN dan mendapat balikannya, connect ke sini
+    (lebih mudah pake putty)
+
+    Login ssh pten di step 3
+
+    > sftp bca@192.168.86.162
+    > pass: BCA1910qris!c0m
+
+    Pastikan pada folder `PTEN_IN/{{YYYYMMDD}}` sudah ada file excel yg diupload pada step 2
+    ![REQ PENUTUPAN PTEN 6](/img/dokumen_magenta/req-penutupan-pten-6.png)
+
+    <br />
+
+5.  Untuk mendapat file balikan dari PTEN, cd ke `folder PTEN_OUT/{{YYYYMMDD}}/{{nama_file}}` kemudian get `{{nama_file}}.txt`
+    ![REQ PENUTUPAN PTEN 7](/img/dokumen_magenta/req-penutupan-pten-7.png)
+
+    Contoh success
+    ![REQ PENUTUPAN PTEN 8](/img/dokumen_magenta/req-penutupan-pten-8.png)  
+    <br />
+
+    Contoh failed  
+    ![REQ PENUTUPAN PTEN 9](/img/dokumen_magenta/req-penutupan-pten-9.png)    

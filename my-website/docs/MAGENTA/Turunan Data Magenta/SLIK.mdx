@@ -1,0 +1,39 @@
+## ERD
+![SLIK](/img/dokumen_magenta/slik.png)
+
+## Table
+|         Field MAGENMC        |    Field SLIK    |                           Value                          |
+|:----------------------------:|:----------------:|:--------------------------------------------------------:|
+| -                            | ID               | Auto Increment                                           |
+| FDM_MERCHANT.ID              | FDM_ID           |                                                          |
+| -                            | REQUEST_ID       | Auto Increment dengan format MAGxxxxxxxxxxxx (13 digit)  |
+| -                            | APP_TYPE         | MAGENTA                                                  |
+| -                            | PRODUCT          | MAGENTA                                                  |
+| -                            | CUST_TYPE        | "A"                                                      |
+| FDM_PEMILIK.NAME             | NAME1            |                                                          |
+|                              | NAME2            |                                                          |
+|                              | NAME3            |                                                          |
+|                              | NAME4            |                                                          |
+|                              | NAME5            |                                                          |
+|                              | NAME6            |                                                          |
+|                              | NAME7            |                                                          |
+|                              | NAME8            |                                                          |
+|                              | NAME9            |                                                          |
+| -                            | GENDER           |                                                          |
+| FDM_PEMILIK.DATE_DOB         | DOB              | Di format menjadi "dd/mm/yyyy"                           |
+| FDM_PEMILIK.POB              | POB              |                                                          |
+| FDM_PEMILIK.IDENTITY_NO      | KTP              |                                                          |
+| FDM_PEMILIK.NPWP             | NPWP             |                                                          |
+| FDM_PEMILIK.JENIS_NASABAH    | COMPANY          | "0" --> JENIS N                                          |
+| ??                           | WITHOUT_PDF      | Y / N                                                    |
+| -                            | REQPURPOSE       |                                                          |
+| -                            | DATA             |                                                          |
+| -                            | PDF              |                                                          |
+| FDM_PEMILIK.CREATEDDATE      | CREATEDDATE      |                                                          |
+| FDM_PEMILIK.CREATEDBY        | CREATEDBY        |                                                          |
+| FDM_PEMILIK.CREATEDTERMINAL  | CREATEDTERMINAL  |                                                          |
+| FDM_PEMILIK.MODIFIEDDATE     | MODIFIEDDATE     |                                                          |
+| FDM_PEMILIK.MODIFIEDBY       | MODIFIEDBY       |                                                          |
+| FDM_PEMILIK.MODIFIEDTERMINAL | MODIFIEDTERMINAL |                                                          |
+| -                            | TYPE             | "Individu", "Pejabat Berwenang 1", "Pejabat Berwenang 2" |
+| -                            | TYPE_ID          | Mengikuti ID dari TYPE                                   |

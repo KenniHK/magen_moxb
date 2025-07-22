@@ -1,0 +1,28 @@
+Jika **MAGENPREP/MAGENTRNSF/MAGENCONVR** running out of statistik:
+
+1. Kill jobnya (jangan di-fok dulu)
+2. Hold job EMSMIDTIER
+3. Rollback flag-flag migrasi. Query: [case MAGENCONVR running diluar statistik](https://bcaoffice365.sharepoint.com/:u:/r/sites/ITX-AMerchanteCommerce/Shared%20Documents/OneNote+Uploads/case+MAGENCONVR+running+diluar+statistik.zip?csf=1&web=1&e=R4t09L)
+
+
+Jika **EMSMIDTIER/MAGENMIDTR** terlanjur jalan tetapi job **INFWDMTQRMS** error:
+
+1.  Rollback turunan midtier
+2.  Ambil file MerchantQR di server **10.0.51.189**, path: **/cd/ems/MIDTIER/**
+3.  Copy all **MID** ke excel di kolom **A**
+    
+    :::tip
+
+    open file di notepad++/vscode, select all mid dengan shortcut alt + shift
+
+    :::
+
+    ![ROLLBACK 1](/img/dokumen_magenta/rollback_1.png)    
+
+4. Copy all data di **MerchantQR** ke excel di kolom **B**
+5. Masukan formula **=IF(ISNA(VLOOKUP(A2;$C$2:$C$3001;1;FALSE));"NO";"YES")** di kolom C
+(num row menyesuaikan banyak data)
+![ROLLBACK 2](/img/dokumen_magenta/rollback_2.png)
+6. Filter kolom **C = NO**, copy all data di kolom B ke **MerchantQR -> save**
+7. Copy file MerchantQR ke server **10.0.51.189**
+8. Informasikan di grup **"INFWDMTQRMS gagal"** kalau sudah bisa di-rerun
