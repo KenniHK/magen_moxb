@@ -1,0 +1,251 @@
+## Change
+
+Sebelum melakukan request, hal-hal yang perlu dilakukan adalah :
+
+1. **Login**  
+Buka halaman [myService](https://myservice/HEAT/?NoDefaultProvider=True), kemudian login dengan domain.
+
+2. **Pilih Role Service Desk Support GSIT**  
+Ketika baru login, akan muncul pilihan role. Pilih role **Self Service User** untuk melanjutkan request. Jika langsung diarahkan ke halaman home, bisa mengganti role di sebelah kanan atas di bawah nama user. Jika role belum tersedia, silakan meminta [add role](https://idgovernance/login.jsf?prompt=true).
+
+3. **Pilih Change**  
+Klik Change dan klik New Change untuk membuat change baru. Untuk input change yang sudah ada, search No Change di kanan atas.
+
+4. **Isi menu details**
+
+    | Label                     | Deskripsi                                                                                                                                     |
+    |---------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
+    | Change Summary            | Secara garis besar fitur perubahan Format: [nama app] - [perubahan]                                                                           |
+    | Changes Reason            | Alasan dari perubahan yang dilakukan                                                                                                          |
+    | Changes Objective/Benefit | Tujuan dan manfaat dari perubahan                                                                                                             |
+    | Changes Activities        | Perubahan yang dilakukan                                                                                                                      |
+    | Changes Mitigation        | Meminimalisir down time -> suspend unsuspend Dilakukan di luar office hour, kalau terjadi kegagalan dapat melakukan fallback ASAP             |
+    | Type                      | Normal --> Perubahan fitur Emergency --> Perbuahan fitur yang harus dilakukan segera Significant --> Perubahan penting seperti perubahan flow |
+    | Group                     | Memilih grup Contoh: IT Services - Application Services                                                                                       |
+    | Service                   | Magenta --> Merchant Solution: Acquiring MCB --> Merchant Solution Merchant Management                                                        |
+    | Category                  | Magenta --> Magenta MCB --> Merchant Service BCA (MSB)                                                                                        |
+    | Change Plan Start         | Today                                                                                                                                         |
+    | Change Plan End           | Perkiraan rentang waktu penyelesaian                                                                                                          |
+
+    Klik save agar menu risk impact dapat diisi.
+
+5. **Pilih menu Risk Impact**
+
+    Business Risk
+
+    - Potensi terdampak pada transaksi finansial
+
+    - Berdampak langsung eksternal --> jika Y, isi pihak eksternal yang terdampak
+
+    - Berdampak pada internal --> Y massive atau tidak massive bergantung dari dampak perubahan
+
+        > Ruang lingkup aplikasi:
+        >
+        > - Magenta (Aplikasi internal), perubahan API pada Magenta kena ke Merchant Apps atau tidak
+        > - Merchant Apps (Aplikasi eksternal)
+
+    Technical Risk
+
+    - Jumlah aplikasi/sistem/infrastruktur lain yang terkena impact dan harus dilakukan perubahan
+
+    -   Jumlah tim support  
+        Beberapa list tim:
+
+        - Tim SAQ (Update deployment)
+        - Tim CTM (Update control m, contoh: perubahan terkait job dan update jadwal job)
+        - Tim DBA (Update script DB)
+        - Tim Network (Update PAIMON)
+
+    - Dilakukan testing UAT yang sudah mendapat approval KLA
+
+    - Durasi yang dibutuhkan jika mengharuskan fallback jika terdapat kesalahan dalam implementasi
+
+    - Apakah perubahan dapat mengakibatkan downtime
+
+    - Sebelum imple dilakukan pilot ditest di environment staging, contoh magenta tidak ada env pilot dan mcb ada pilot
+
+    - Dilakukan verifikasi oleh tim pada saat melakukan implementasi
+
+        > Ruang lingkup perubahan
+        >
+        > - Aplikasi baru (Perubahan aplikasi baru)
+        > - Aplikasi (Perubahan pada aplikasi eksisting)
+        > - Non-Aplikasi (Perubahan arsitektur)
+
+    Selain dari aplikasi baru, akan muncul beberapa list pertanyaan yang harus dijawab sesuai dengan perubahan pada aplikasi. Ubah status dari logged menjadi requested, dan klik save.
+
+6. **Approval**  
+Minta approval dari **kabiro**. Setelah itu, minta approval ke **Tim CAB**. Setelah selesai, maka statusnya akan berubah menjadi scheduled dan changes siap digunakan untuk proses berikutnya, yaitu release.
+
+## Release
+Sebelum melakukan request, hal-hal yang perlu dilakukan adalah :
+
+1. **Login**  
+Buka halaman [myService](https://myservice/HEAT/?NoDefaultProvider=True), kemudian login dengan domain.
+
+2. **Pilih Role Service Desk Support GSIT**  
+Ketika baru login, akan muncul pilihan role. Pilih role **Self Service User** untuk melanjutkan request. Jika langsung diarahkan ke halaman home, bisa mengganti role di sebelah kanan atas di bawah nama user. Jika role belum tersedia, silakan meminta [add role](https://idgovernance/login.jsf?prompt=true).
+
+3. **Pilih Release**  
+Buka menu Release dan klik New Release untuk membuat release baru. Untuk input release yang sudah ada, search No Release di kanan atas.
+
+4. **Isi ownership & status**  
+![OWNERSHIP & STATUS](/img/dokumen_magenta/download.png)
+
+    | Label  | Deskripsi                                                                                                                                                                          |
+    |--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | Type   | Tipe implementasi Immediate --> Implementasi yang harus dilakukan segera Scheduled --> Implementasi yang mengikuti jadwal yang disepakati                                          |
+    | Scope  | Ruang lingkup implementasi Master --> Implementasi skala besar, perubahan core Phase --> Implementasi kecil, perubahan fitur per fase Standalone --> Renewal SSL, rescheduling job |
+    | Phase  | Feature based --> Implementasi perubahan fitur aplikasi Location based --> Implementasi relokasi site                                                                              |
+    | Status | Status Release Draft --> Hanya bisa dilihat oleh pembuat Requested --> Ketika selesai input untuk memunculkan milestone Active --> Sudah aktif dan bisa lanjut mengisi milestone   |
+    | Team   | Tim pembuat release Contoh: Integrated Merchant & e-Commerce Solution                                                                                                              |
+    | Owner  | Nama pembuat release                                                                                                                                                               |
+    | UAT    | UAT GSIT --> Perubahan fitur yang inisiatif dari Tim IT UAT KLA --> Perubahan fitur dari Tim Bisnis                                                                                |
+
+5. **Isi menu details**  
+![MENU DETAILS](/img/dokumen_magenta/2-myservice-release.png)
+
+    | Label                | Deskripsi                                                                                                                          |
+    |----------------------|------------------------------------------------------------------------------------------------------------------------------------|
+    | Project Name         | Nama release                                                                                                                       |
+    | Description          | Tulis semua change dengan format [no change] - [nama change summary]                                                               |
+    | Scheduled Start Date | Today                                                                                                                              |
+    | Target End Date      | Target berakhirnya imple, biasanya diberi rentang waktu 1 tahun agar ketika ada problem masih bisa dilakukan implementasi tambahan |
+
+    Klik Save untuk melanjutkan Link Change.
+
+6. **Link Change**
+    ![MENU CHANGE](/img/dokumen_magenta/3-myservice-release.png)
+    Buka menu Change, kemudian klik Link. Lalu cari change yang akan diimplementasikan dengan memasukkan No Change di bagian kanan atas, lalu search dan select change tersebut. Setelah semua change sudah dilink, klik Save.
+
+    Ubah status menjadi Requested dan klik Save. Refresh untuk melanjutkan pengisian Milestones.
+
+7. **Milestones**  
+Pada menu Milestones, ada 5 subject: Build & Test, UAT, Deployment Preparation, Deployment, dan Release Review & Closure. Namun jika setelah dilakukan deployment terdapat temuan dan masih dalam scope yang sama, maka bisa menambahkan Deployment Preparation Additional dan Deployment Additional untuk melakukan deployment susulan.
+![MENU MILESTONES](/img/dokumen_magenta/4-myservice-release.png)
+
+- Build & Test  
+
+    | Label           | Isi                                  |
+    |-----------------|--------------------------------------|
+    | Plan Start Date | Today, jika error maka sesuaikan jam |
+    | Plan End Date   | Perkiraan rentang waktu penyelesaian |
+    | Actual End Date | Jika sudah selesai mengisi           |
+
+    - Documentation --> Input EFPTA
+    - Klik new documentation
+
+    ![NEW DOCUMENTATION](/img/dokumen_magenta/5-myservice-release.png)
+
+    > Magenta --> upload file EFPTA  
+    > MCB tidak perlu
+
+    | Label         | Isi        |
+    |---------------|------------|
+    | Documentation | EFPTA ID   |
+    | Description   | [EFPTA ID] |
+
+    - Centang Completed dan klik Save
+
+    - Upload file EFPTA pada bagian Attachments
+
+    - Setelah selesai, ubah Status menjadi Completed dan klik Save
+
+    - UAT
+
+        | Label           | Isi                                                        |
+        |-----------------|------------------------------------------------------------|
+        | Plan Start Date | Today, jika error maka sesuaikan jam                       |
+        | Plan End Date   | GSIT: Today KLA: Jeda 2 minggu karena membutuhkan approval |
+        | Actual End Date | Jika sudah selesai                                         |
+        | Status          | Setelah selesai ubah menjadi active                        |
+        | Approval        | Khusus untuk UAT KLA, harus minta approval dari Tim KLA    |
+        | Status          | Setelah selesai, ubah Status menjadi completed             |
+
+    - Deployment Preparation/Deployment Preparation Additional
+
+        | Label           | Isi                                  |
+        |-----------------|--------------------------------------|
+        | Plan Start Date | Today, jika error maka sesuaikan jam |
+        | Plan End Date   | Perkiraan rentang waktu penyelesaian |
+        | Actual End Date | Jika sudah selesai                   |
+        | Documentation   | Input checklist                      |
+
+    - Klik new Documentation
+    ![NEW DOCUMENTATION](/img/dokumen_magenta/6-myservice-release.png)
+
+
+        | Label         | Isi                                                             |
+        |---------------|-----------------------------------------------------------------|
+        | Documentation | Checklist Implementasi Plan (Termasuk Fallback Plan)            |
+        | Description   | Format: Checklist Implementasi ([No Release]) - [Judul Release] |
+
+    - Centang Completed dan klik Save
+
+    - Upload file checklist pada bagian Attachments
+
+    - Peer Review
+    ![NEW DOCUMENTATION](/img/dokumen_magenta/7-myservice-release.png)
+
+        | Label               | Isi                                                                    |
+        |---------------------|------------------------------------------------------------------------|
+        | Peer Review Summary | Peer Review                                                            |
+        | Team                | Tim penanggung jawab Contoh: Integrated Merchant & e-Commerce Solution |
+        | Peer                | Nama yang akan melakukan peer review                                   |
+
+        - Klik Save
+
+        - Setelah selesai, ubah status menjadi active
+
+        - Preparation Assessment --> Isi sesuai dengan project
+
+        - Setelah selesai, ubah status menjadi completed dan save
+
+    - Deployment/Deployment Additional
+
+        | Label                          | Isi                                      |
+        |--------------------------------|------------------------------------------|
+        | Plan Start Date                | Today                                    |
+        | Plan End Date                  | Beberapa bulan setelah hari implementasi |
+        | Actual End Date                | Jika sudah selesai                       |
+        | Implentation Date & Start Time | Hari H imple dan jam imple               |
+        | Duration                       | Durasi implementasi                      |
+        | Downtime                       | Apakah terjadi downtime ketika imple     |
+
+    - Tambah task untuk assign tim yang melakukan implementasi
+
+    - Klik New Task
+    ![NEW DOCUMENTATION](/img/dokumen_magenta/8-myservice-release.png)
+
+        | Label   | Isi                                                                                                                                  |
+        |---------|--------------------------------------------------------------------------------------------------------------------------------------|
+        | Summary | Format: Task [Nama tim]                                                                                                              |
+        | Team    | Nama tim terkait implementasi. Dapat menghubungi tim terkait untuk mengisi detail, resolution, dan owner untuk PIC masing-masing tim |
+
+    - Klik Save
+
+    - Support --> Support untuk kebutuhan informasi deployment berupa DB atau link gitlab
+
+        :::info
+
+        Untuk task dan support harus disediakan slotnya terlebih dahulu sebelum melakukan Deploy Request karena tidak dapat menambahkan slot ketika sudah direquest
+
+        :::
+
+    - Klik deploy request
+
+        | Label    | Isi                                         |
+        |----------|---------------------------------------------|
+        | Approval | Minta approval Tim CAB                      |
+        | Status   | Setelah selesai, ubah Status menjadi Active |
+
+    - Release Review & Closure
+    Bagian ini akan diisi oleh Tim CAB setelah melakukan review terhadap implementasi.
+
+8. **Related Releases**  
+Jika terdapat release yang berimpact kepada beberapa aplikasi sekaligus, maka release akan dibuat terpisah dan harus dilink menggunakan related releases.
+Klik Link
+
+    ![NEW DOCUMENTATION](/img/dokumen_magenta/9-myservice-release.png)
+
+    Cari release tambahan dan search, kemudian klik Select.

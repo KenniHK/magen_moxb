@@ -1,0 +1,62 @@
+Stress Test menggunakan Apache Jmeter (5.5)
+
+1. Ganti nama test plan sesuai kebutuhan.
+![STRESS TEST OSA](/img/dokumen_magenta/stress-test-osa-1.png)
+<br />
+
+2. Klik kanan pada tab Test Plan (Stress Test OSA), Add > Threads (Users) > Thread Group.
+![STRESS TEST OSA 2](/img/dokumen_magenta/stress-test-osa-2.png)
+<br />
+
+3. Pada tab Thread Group, klik kanan, Add > Sampler > HTTP Request atau sesuaikan dengan kebutuhan.
+![STRESS TEST OSA 3](/img/dokumen_magenta/stress-test-osa-3.png)
+<br />
+
+4. Ubah properties di HTTP Request. (Jika memilih HTTP Request)
+![STRESS TEST OSA 4](/img/dokumen_magenta/stress-test-osa-4.png)
+
+    ```
+    Contoh:
+    Name: History Pengajuan
+    Server Name or IP: 10.20.214.173
+    Port Number: 55203
+    HTTP Request: GET
+    Path: /api.fdm_v2.0.0/v1.0.0/PengajuanMerchant/history-pengajuan/00000172575?page=1&size=5&orderby=id&query=id%3Bgreater%3B0    
+    ```
+
+    Lakukan hal yang sama untuk service lainnya.
+    <br />
+
+5. Klik kanan pada tab Thread Group > Add > Listener > View Results Tree, Summary Report, Assertion Results, dan View Results in Table.
+![STRESS TEST OSA 6](/img/dokumen_magenta/stress-test-osa-6.png)
+<br />
+
+6. Sesuaikan thread properties dengan service yang ingin ditest.
+![STRESS TEST OSA 7](/img/dokumen_magenta/stress-test-osa-7.png)
+
+    > Number of Threads --> Jumlah user yang akan disimulasikan.  
+    > Ramp-up period --> Waktu yang dibutuhkan untuk mencapai jumlah user tersebut.  
+    > Loop Count --> Berapa kali simulasi akan dijalankan.
+<br />
+
+7. Klik tombol ▶ hijau untuk memulai testnya. Test akan dijalankan untuk semua services yang telah ditambahkan.
+![STRESS TEST OSA 8](/img/dokumen_magenta/stress-test-osa-8.png)
+<br />
+
+8. Hasilnya akan terlihat seperti ini. Lakukan test beberapa kali dan perhatikan degradasi yang terjadi. Sesuaikan jumlah user dengan degradasi tersebut.
+![STRESS TEST OSA 9](/img/dokumen_magenta/stress-test-osa-9.png)
+![STRESS TEST OSA 10](/img/dokumen_magenta/stress-test-osa-10.png)
+![STRESS TEST OSA 11](/img/dokumen_magenta/stress-test-osa-11.png)
+![STRESS TEST OSA 12](/img/dokumen_magenta/stress-test-osa-12.png)
+
+    ```
+    - Assertion Results menunjukkan service mana saja yang sedang ditest.
+    - View Results Tree menunjukkan detail dari setiap test, termasuk load time, latency, dan response.
+    - View Results in Table menampilkan beberapa detail dari setiap test dalam sebuah tabel.
+    - Summary Report menampilkan ringkasan dari hasil test masing-masing service.
+    ```
+
+    > Menjalankan test pada setiap service sekaligus akan memberikan hasil yang jauh lebih lambat. Untuk mengetest masing-masing service secara terpisah, bisa dilakukan disable/enable pada service tertentu dengan cara klik pada tab service tersebut dan toggle Ctrl + T.
+
+Untuk clear result, klik ikon sapu dan gear.
+![STRESS TEST OSA 8b](/img/dokumen_magenta/stress-test-osa-8b.png)

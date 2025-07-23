@@ -1,0 +1,109 @@
+## 1. Layar CARDLINK
+![LAYAR CARDLINK](/img/dokumen_magenta/mappingv3_1.png)
+
+## 2. Index CARDLINK
+
+**CARDLINK**
+
+| IDX | NAME             |
+|-----|------------------|
+| 1   | VISA CARD        |
+| 2   | MASTER CARD      |
+| 3   | PRIVATE LABEL 1  |
+| 4   | PRIVATE LABEL 2  |
+| 5   | UNION PAY        |
+| 6   | AMERICAN EXPRESS |
+| 7   | DEBIT CARD       |
+| 8   | JCB CARD         |
+| 9   | PRIVATE LABEL 5  |
+| 10  | ALIPAY           |
+| 11  | WECHAT           |
+| 12  | FLAZZ PAYMENT    |
+| 13  | BCA PAYLATER     |
+
+## 3. CARDLINK vs EMS
+
+**EMS.PRODUCT**
+
+| CARD INDEX | PRODUCT_ID | PRODUCT NAME   |
+|------------|------------|----------------|
+| 1          | 2          | VISA           |
+| 2          | 3          | Master         |
+| 4          | 1          | BCA Card       |
+| 5          | 30         | Union Pay      |
+| 6          | 40         | Amex BCA       |
+| 8          | 4          | JCB            |
+| 7          | 6          | Debit BCA      |
+| -          | 58         | Debit Domestik |
+| -          | 8          | Maestro        |
+
+## 4. CARDLINK vs FACILITYCARD
+
+**MAGENMC.FACILITYCARD**
+
+| FACILITYCARD_ID | FACILITY CARD NAME | CARD INDEX |
+|-----------------|--------------------|------------|
+| 1               | Debit              | 7          |
+| 2               | Master Card        | -          |
+| 3               | Prima              | -          |
+| 4               | Maestro            | -          |
+| 5               | BCA                | 4          |
+| 6               | Visa               | 1          |
+| 7               | Master             | 2          |
+| 8               | JCB                | 8          |
+| 9               | Amex               | 6          |
+| 10              | CUP                | 5          |
+| 11              | Alipay             | 10         |
+| 12              | WeChat Pay         | 11         |
+| 13              | Flazz Payment      | 12         |
+| 14              | Paylater           | 13         |
+
+## 5. CARDLINK vs FACILITYCARD vs MST_FACILITYCARD vs JENIS_OUTLET
+
+**MAGENMC.MST_FACILITYCARD**
+
+| FACILITYCARD_ID | CARD INDEX | MST_FACILITYCARD_ID | FACILITYCARD_NAME | JENIS_OUTLET |
+|-----------------|------------|---------------------|-------------------|--------------|
+| 1               | 7          | 1                   | Debit             | Retail       |
+| 14              | 13         | 43                  | BCA Paylater      | Retail       |
+| 3               | -          | 3                   | Prima             | Retail       |
+| 4               | -          | 4                   | Maestro           | Retail       |
+| 2               | -          | 2                   | Master Card       | Retail       |
+| 1               | 7          | 42                  | Sakuku            | Retail       |
+| 13              | 12         | 41                  | Flazz             | Retail       |
+| 10              | 5          | 22                  | CUP               | Retail       |
+| 9               | 6          | 21                  | Amex              | Retail       |
+| 8               | 8          | 20                  | JCB               | Retail       |
+| 7               | 2          | 19                  | Master            | Retail       |
+| 6               | 1          | 18                  | Visa              | Retail       |
+| 5               | 4          | 17                  | BCA               | Retail       |
+| 10              | 5          | 28                  | CUP               | E-commerce   |
+| 2               | -          | 6                   | Master Card       | E-commerce   |
+| 3               | -          | 7                   | Prima             | E-commerce   |
+| 4               | -          | 8                   | Maestro           | E-commerce   |
+| 1               | 7          | 5                   | Debit             | E-commerce   |
+| 9               | 6          | 27                  | Amex              | E-commerce   |
+| 8               | 8          | 26                  | JCB               | E-commerce   |
+| 7               | 2          | 25                  | Master            | E-commerce   |
+| 6               | 1          | 24                  | Visa              | E-commerce   |
+| 5               | 4          | 23                  | BCA               | E-commerce   |
+| 4               | -          | 12                  | Maestro           | Recuring     |
+| 10              | 5          | 34                  | CUP               | Recuring     |
+| 9               | 6          | 33                  | Amex              | Recuring     |
+| 8               | 8          | 32                  | JCB               | Recuring     |
+| 7               | 2          | 31                  | Master            | Recuring     |
+| 6               | 1          | 30                  | Visa              | Recuring     |
+| 5               | 4          | 29                  | BCA               | Recuring     |
+| 1               | 7          | 9                   | Debit             | Recuring     |
+| 2               | -          | 10                  | Master Card       | Recuring     |
+| 3               | -          | 11                  | Prima             | Recuring     |
+| 4               | -          | 16                  | Maestro           | AutoPay      |
+| 5               | 4          | 35                  | BCA               | AutoPay      |
+| 6               | 1          | 36                  | Visa              | AutoPay      |
+| 7               | 2          | 37                  | Master            | AutoPay      |
+| 1               | 7          | 13                  | Debit             | AutoPay      |
+| 9               | 6          | 39                  | Amex              | AutoPay      |
+| 10              | 5          | 40                  | CUP               | AutoPay      |
+| 3               | -          | 15                  | Prima             | AutoPay      |
+| 2               | -          | 14                  | Master Card       | AutoPay      |
+| 8               | 8          | 38                  | JCB               | AutoPay      |

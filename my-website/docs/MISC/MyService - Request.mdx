@@ -1,0 +1,220 @@
+## Request Gitlab
+
+1. **Cari Request Gitlab**  
+    Klik menu Service Catalog untuk melakukan request. Search request gitlab pada kolom search dan masuk ke request gitlab.
+
+    ![REQUEST GITLAB](/img/dokumen_magenta/request-myservice-2.png)
+
+2. **Isi Jenis Request dan Environment**  
+    Pada Jenis Request pilih Create Project Gitlab dan Environment pilih [Gitlab Prod](http://bcagitlab/). Lalu klik Save for Later.
+    ![REQUEST ENVIRONTMENT](/img/dokumen_magenta/request-myservice-3.png)
+
+3. **Tambahkan Project**
+    Setelah mengisi Jenis Request dan Environment, akan muncul tombol Add Detail Create Project. Klik tombol tersebut dan isi nama project gitlab yang ingin dibuat.
+    ![CREATE PROJECT](/img/dokumen_magenta/request-myservice-3b.png)
+
+4. **Isi Detail Project**
+    Kemudian project yang sudah dibuat akan muncul pada list Detail Request Gitlab. Klik project terkait dan akan muncul pop up untuk edit detail project.
+    ![EDIT DETAIL PROJECT](/img/dokumen_magenta/request-myservice-4.png)
+
+| Label             | Deskripsi                                                                                                                                             |
+|-------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Path Grup Prod    | Path grup project yang ingin dibuat, Cth: ITX-A/MSE/Magenta                                                                                           |
+| Jumlah Branch UAT | Jumlah branch UAT yang ingin dibuat                                                                                                                   |
+| App Controller    | 5                                                                                                                                                     |
+| User Domain       | Orang-orang yang bertanggung jawab User Domain 1: u051621 User Domain 2: u059789 User Domain 3: u059805 User Domain 4: u064812 User Domain 5: u060258 |
+| Deskripsi Project | Tujuan pembuatan gitlab                                                                                                                               |
+
+Setelah mengisi detail, klik Save for Later
+
+5. **Submit request dan minta approval**
+Ketika sudah selesai menambahkan project gitlab, klik tombol submit request. Kemudian akan muncul di Approval untuk meminta approval dari kabiro.
+
+## Request Open Port
+1. **Cari Request Open Port**  
+Klik menu Service Catalog untuk melakukan request. Search request open port pada kolom search dan masuk ke request open port firewall.
+![REQUEST OPEN PORT](/img/dokumen_magenta/request-myservice-5.png)
+
+2. **Disclaimer Open Port**  
+Setelah masuk ke Request Open Port, langsung scroll ke paling bawah pada menu disclaimer open port, kemudian klik Agree untuk bisa melanjukan request.
+![REQUEST OPEN PORT 2](/img/dokumen_magenta/request-myservice-6.png)
+
+3. **Isi detail Request Open Port**
+Setelah itu balik kebagian atas halaman dan isi beberapa detail request open port.
+![REQUEST OPEN PORT 3](/img/dokumen_magenta/request-myservice-7.png)
+
+| Label               | Deskripsi                                                                      |
+|---------------------|--------------------------------------------------------------------------------|
+| Request Type        | Scheduled: Request sesuai jadwal Immediate: Request yang mendesak              |
+| Project Name        | Nama project yang akan direquest port Contoh: Migrasi server batch UAT Magenta |
+| Notes               | Penjelasan tambahan Contoh: Open Port Environment baru server batch Magenta    |
+| External Access     | Port bisa diakses dari pihak luar                                              |
+| Cross Environment   | Akses port yang berbeda environment seperti dari dev ke prod                   |
+| Temporary Open Port | Open port berstatus sementara                                                  |
+
+Setelah mengisi detail, klik Save for Later.
+
+4. **Isi Review Request Policy Firewall**
+![REQUEST POLICY](/img/dokumen_magenta/request-myservice-8.png)
+
+5. **Tambahkan Port**
+Untuk menambahkan Request Open Port, bisa klik Add, dan mengisi detail Open Port.
+![TAMBAH PORT](/img/dokumen_magenta/request-myservice-9.png)
+
+| Label          | Deskripsi                                                                                                                                                        |
+|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Source IP      | IP server atau DNS atau akses kantor (tambahkan nama biro)                                                                                                       |
+| Destination IP | IP dari service/API (Convert range IP menjadi CIDR)                                                                                                              |
+| Port           | Port yang ingin dibuka Kalau port dalam range disarankan sediakan range 10 untuk port yang terdiri dari 5 angka, contoh: port 55593, maka open port 55591-55600) |
+| Protocol       | TCP                                                                                                                                                              |
+| Arah           | Open Port satu arah dari source ke destination atau dua arah bolak balik                                                                                         |
+| Action         | Request port untuk open atau closed                                                                                                                              |
+| Fungsi         | Note tambahan / penjelasan open port                                                                                                                             |
+
+List Open Port dapat dilihat di menu Detail Request
+
+6. **Submit Request dan minta approval**
+Ketika sudah selesai menambahkan project gitlab, klik tombol submit request. Kemudian akan muncul di Approval untuk meminta approval dari kabiro.
+
+## Request Pipeline Jenkins
+
+1. **Cari Request CI-CD**
+Klik menu Service Catalog untuk melakukan request. Search request pipeline pada kolom search dan masuk ke Request CI-CD DevOps Tools.
+![REQUEST CI-CD](/img/dokumen_magenta/request-myservice-10.png)
+
+2. **Isi Detail Pipeline**
+Setelah masuk ke Request CI-CD, pilih menu 4.
+![REQUEST CI-CD 2](/img/dokumen_magenta/request-myservice-11.png)
+
+| Label                   | Deskripsi                               |
+|-------------------------|-----------------------------------------|
+| Jumlah Pipeline Non PCF | Tergantung kebutuhan env DEV, UAT, PROD |
+| Environment             | Development: DEV,UAT Production: PROD   |
+
+![REQUEST CI-CD 3](/img/dokumen_magenta/request-myservice-12.png)
+
+| Label           | Deskripsi                                                                                                  |
+|-----------------|------------------------------------------------------------------------------------------------------------|
+| Git Project URL | Link gitlab project terkait, Format http://bcagitlab/[Nama Grup]/[Nama Sub Grup]/[Nama Project]            |
+| Versi JDK       | 1.8                                                                                                        |
+| Metode Compile  | Metode untuk compile source code (Maven/ANT)                                                               |
+| Compiler File   | File untuk meng-compile informasi dan konfigurasi project (pom.xml/ivy.xml)                                |
+| Build Command   | Command untuk build Maven Normal: clean package -Dmaven.test.skip=true Spring Profile: Lihat tabel berikut |
+
+Command untuk build maven dengan Spring Profile
+
+| Tipe | Command                  |
+|------|--------------------------|
+| DEV  | mvn clean install -PDEV1 |
+| UAT  | mvn clean install -PUAT1 |
+| PROD | mvn clean install -PPROD |
+| ANT  | ant -f "build.xml"       |
+
+### Built 2
+
+<table>
+    <tr>
+    <th>Label</th>
+    <th colspan="2">Deskripsi</th>
+    </tr>
+
+    <tr>
+    <td>Git Project URL</td>
+    <td>Link gitlab project terkait</td>
+    </tr>
+
+    <tr>
+    <td>Versi JDK</td>
+    <td rowspan="4">Link gitlab project terkait</td>
+    </tr>
+    <tr>
+    <td>Versi JDK</td>
+    </tr>
+       <tr>
+    <td>Versi JDK</td>
+    </tr>
+       <tr>
+    <td>Versi JDK</td>
+    </tr>
+
+</table>
+
+![CREATE PIPELINE](/img/dokumen_magenta/request-myservice-13.png)
+
+| Label                        | Deskripsi                                                                              |
+|------------------------------|----------------------------------------------------------------------------------------|
+| Deployment File              | File seperti jar, bat/sh, properties, dan lainnya                                      |
+| Gitlab Branch                | Environment server yang direquest Contoh: Environment dev, untuk gitlab branchnya DEV1 |
+| File Name                    | Nama file di gitlab                                                                    |
+| File Path                    | Link URL file di gitlab Khusus untuk .jar urlnya adalah ./target                       |
+| Destination Server Host Name | Hostname di console server tujuan                                                      |
+
+Bisa dicek dengan execute hostname di console
+
+![HOSTNAME DI CONSOLE](/img/dokumen_magenta/request-myservice-14.png)
+
+| Label                        | Deskripsi                            |
+|------------------------------|--------------------------------------|
+| Destination Server IP        | IP Server tujuan                     |
+| Destination Server Username  | Contoh: appmagen                     |
+| Destination Server Directory | Path directory file di server tujuan |
+
+
+## Request Break Password
+
+1. **Cari Request Break Password**
+![REQUEST BREAK PASSWORD](/img/dokumen_magenta/request-myservice-15.png)
+Klik menu Service Catalog untuk melakukan request. Search request break pada kolom search dan masuk ke request break password.
+
+2. **Isi detail Request Break Password**
+![REQUEST BREAK PASSWORD 2](/img/dokumen_magenta/request-myservice-16.png)
+
+| Label        | Deskripsi                                                                                                                                                                     |
+|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Kebutuhan    | Tujuan dari request Emergency: cisco, kalau ada incident Release Change: change/perubahan Support Non Change: pg, untuk akses server butuh breakpass tapi tidak ada perubahan |
+| Descriptions | Penjelasan terkait kebutuhan request                                                                                                                                          |
+| Target Start | Tanggal mulai breakpass                                                                                                                                                       |
+| Target Done  | Tanggal berakhiranya breakpass                                                                                                                                                |
+
+Save for Later
+
+3. **Link Release**
+![LINK RELEASE](/img/dokumen_magenta/request-myservice-17.png)
+    - Di bagian bawah klik menu Milestone, kemudian klik Link
+    - Cari dan pilih release ID yang ingin di-request break password-nya
+    - Save for later
+
+4. **Tambah RUID**
+![TAMBAH RUID](/img/dokumen_magenta/request-myservice-18.png)
+Klik kolom search RUID di bagian kanan.
+
+![FILTER RUID](/img/dokumen_magenta/request-myservice-19.png)
+Filter sesuai nama aplikasi. Setelahnya akan muncul list ID RUID yang harus dipilih.
+
+![PILIH RUID](/img/dokumen_magenta/request-myservice-20.png)
+    - Pilih RUID dan klik Add RUID Detail yang terletak di bawah search RUID. Kemudian akan muncul list RUID yang dipilih pada menu Detail Request.
+    - Klik RUID Reservation Check untuk mengecek status RUID apakah dapat dilakukan breakpass atau tidak.
+    - Save dan submit request serta minta approval kabiro.
+
+## Request Scheduling job
+Dapat melakukan penambahan job baru, penghapusan job, perubahan job
+
+1. **Cari Request Scheduling Job**
+![REQUEST SCHEDULING JOB](/img/dokumen_magenta/request-myservice-21.png)
+Klik menu Service Catalog untuk melakukan request. Search request scheduling pada kolom search dan masuk ke request scheduling job.
+
+2. **Isi detail request scheduling job**
+![DETAIL REQUEST SCHEDULING JOB](/img/dokumen_magenta/request-myservice-22.png)
+
+| Label          | Deskripsi                                                                                              |
+|----------------|--------------------------------------------------------------------------------------------------------|
+| Application    | Nama aplikasi yang ingin direquest                                                                     |
+| Type Request   | Normal: Scheduling dilakukan sesuai jadwal Emergency: Scheduling harus dilakukan secepatnya Unschedule |
+| Jumlah Job     | Jumlah job yang ingin dilakukan request                                                                |
+| Effective Date | Tanggal berlakunya request                                                                             |
+| Release Number | Release ID yang terkait perubahan                                                                      |
+| Attachment     | Upload file Form Request Job Scheduling                                                                |
+
+    - Pilih Review & Submit
+    - Klik Submit
+    - Minta approval dari kabiro

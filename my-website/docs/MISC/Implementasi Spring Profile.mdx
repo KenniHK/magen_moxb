@@ -1,0 +1,43 @@
+Langkah untuk merge implementasi **spring profile** pada source project dari BCA:
+
+1. Jika masih dalam format archive, maka ekstrak source BCA ke lokasi yang ditentukan.
+![SPRING PROFILE 1](/img/dokumen_magenta/spring-profile-1.png)
+<br />
+
+2. Source dari bitbucket, copy folder src dan file pom.xml ke lokasi source BCA (seperti pada langkah #1), sesuai dengan project yang dimaksud.
+![SPRING PROFILE 2](/img/dokumen_magenta/spring-profile-2.png)
+![SPRING PROFILE 3](/img/dokumen_magenta/spring-profile-3.png)
+<br />
+
+3. Pada hasil source BCA:
+    a. Hapus seluruh isi dari `{root-project-bca}/src/main/java;`
+    b. Move isi dari `{root-project-bca}/src` selain folder **main** ke `{root-project-bca}/src/main/java`.
+![SPRING PROFILE 4](/img/dokumen_magenta/spring-profile-4.png)
+<br />
+
+4. Dengan menggunakan compare tool, merge `{root-project-bitbucket}/src/main/java` dan `{root-project-bca}/src/main/java` :
+    ![SPRING PROFILE 5](/img/dokumen_magenta/spring-profile-5.png)
+
+    a. Copy file dari `{root-project-bitbucket}/src/main/java` ke `{root-project-bca}/src/main/java` untuk setiap class:
+
+        - bca.magenta.api.util.config.KeycloakAdapterConfig;
+        - bca.magenta.api.util.controller.HomeController; (jika ditemukan)
+        - bca.magenta.api.util.util.ApiUtilV2Utility;
+        - bca.magenta.api.util.Application;
+        - bca.magenta.api.util.ServletInitializer.
+    <br />
+    b. Copy **line/baris** dari `{root-project-bitbucket}/src/main/java` ke `{root-project-bca}/src/main/java` untuk setiap class yang mengandung `"StaticVariable.getProp"`. Jadi bukan copy file, melainkan cek setiap perbedaan yang ada dalam suatu file.
+    ![SPRING PROFILE 6](/img/dokumen_magenta/spring-profile-6.png)
+
+<br />
+
+5. Lakukan penyesuaian value pada `{root-project-bca}/src/main/resources` (jika memang ada yang perlu disesuaikan lagi):
+![SPRING PROFILE 7](/img/dokumen_magenta/spring-profile-7.png)
+<br />
+
+6. Pada `{root-project-bca}/`, hapus semua isinya selain folder *src* dan file *pom.xml*.
+<br />
+
+7. Untuk menjalankan project tersebut dari aplikasi terminal bisa menggunakan perintah: `mvn clean spring-boot:run –PUAT`.
+![SPRING PROFILE 8](/img/dokumen_magenta/spring-profile-8.png)
+![SPRING PROFILE 9](/img/dokumen_magenta/spring-profile-9.png)
